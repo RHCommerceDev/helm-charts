@@ -1,9 +1,9 @@
-{{- $ingress := .Values.keycloak.ingress.external -}}
+{{- $ingress := .Values.keycloak.ingress.internal -}}
 {{- if $ingress.enabled -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ include "keycloak.fullname" . }}
+  name: {{ include "keycloak.fullname" . }}-internal
   {{- with $ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -30,7 +30,7 @@ spec:
       http:
         paths:
         {{- range $ingress.paths }}
-          - path: {{ . }}
+          - path: {{ $ingress.path }}
             backend:
               serviceName: {{ include "keycloak.fullname" $ }}-http
               {{- if $ingress.enableHttps }}

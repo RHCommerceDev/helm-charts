@@ -1,0 +1,6 @@
+bin/
+work/
+*.out
+*.tgz
+configs/
+temp/
