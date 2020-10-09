@@ -133,13 +133,15 @@ spec:
           livenessProbe:
             httpGet:
               path: {{ if ne .Values.keycloak.basepath "" }}/{{ .Values.keycloak.basepath }}{{ end }}/
-              port: http
+              port: https
+              scheme: HTTPS
             initialDelaySeconds: {{ .Values.keycloak.livenessProbe.initialDelaySeconds }}
             timeoutSeconds: {{ .Values.keycloak.livenessProbe.timeoutSeconds }}
           readinessProbe:
             httpGet:
               path: {{ if ne .Values.keycloak.basepath "" }}/{{ .Values.keycloak.basepath }}{{ end }}/realms/master
-              port: http
+              port: https
+              scheme: HTTPS
             initialDelaySeconds: {{ .Values.keycloak.readinessProbe.initialDelaySeconds }}
             timeoutSeconds: {{ .Values.keycloak.readinessProbe.timeoutSeconds }}
           resources:
