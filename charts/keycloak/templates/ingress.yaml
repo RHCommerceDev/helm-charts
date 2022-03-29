@@ -31,13 +31,17 @@ spec:
         paths:
         {{- range $ingress.paths }}
           - path: {{ . }}
+            pathType: ImplementationSpecific
             backend:
-              serviceName: {{ include "keycloak.fullname" $ }}-http
-              {{- if $ingress.enableHttps }}
-              servicePort: https
-              {{- else }}
-              servicePort: http
-              {{- end }}
+              service:
+                name: {{ include "keycloak.fullname" $ }}-http
+                {{- if $ingress.enableHttps }}
+                port: 
+                  name: https
+                {{- else }}
+                port: 
+                  name: http
+                {{- end }}
         {{- end }}
   {{- end }}
 {{- end -}}
